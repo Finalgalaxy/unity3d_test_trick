@@ -31,6 +31,8 @@ sysinfo.txt
 *.apk
 *.unitypackage
 
+Thumbs.db
+Thumbs.db.meta
 
 # Exclude unwanted files in nopublish directories
 __nopublish/

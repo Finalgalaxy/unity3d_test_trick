@@ -27,9 +27,9 @@ public class PlayerController : MonoBehaviour, IPlayerActions {
 		m_WallJumpTOP = this.transform.FindChild("WallJumpTOP");
 		m_WallJumpBOTTOM = this.transform.FindChild("WallJumpBOTTOM");
 		defaultpos = this.transform.position;
-		weapon_list = new Weapon[2];
+		/*weapon_list = new Weapon[2];
 		weapon_list[0] = new PolloBoomerang(weapon_go_list[0]);
-		weapon_list[1] = new RocketLauncher(weapon_go_list[1]);
+		weapon_list[1] = new RocketLauncher(weapon_go_list[1]);*/
 		weapon_equipped = 1;
 	}
 
@@ -80,7 +80,7 @@ public class PlayerController : MonoBehaviour, IPlayerActions {
 		}
 
 		//Debug.Log("IsGrounded=" + isGrounded);
-		bool buttonFire_pressed=false;
+		/*bool buttonFire_pressed=false;
 		if(!weapon_list[weapon_equipped].is_spammable_fire && Input.GetButtonDown("Fire1")) {
 			buttonFire_pressed = true;
 		} else if(weapon_list[weapon_equipped].is_spammable_fire && Input.GetButton("Fire1")) {
@@ -91,7 +91,7 @@ public class PlayerController : MonoBehaviour, IPlayerActions {
 		if(buttonFire_pressed && ((Time.time - ctime_fire_weapon) > weapon_list[weapon_equipped].rateo_fire || can_fire)) {
 			fired = true;
 			ctime_fire_weapon = Time.time;
-		}
+		}*/
 	}
 
 	void FixedUpdate(){
