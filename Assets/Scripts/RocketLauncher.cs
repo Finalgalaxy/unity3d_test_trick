@@ -16,6 +16,8 @@ public class RocketLauncher : Weapon
 		// qua dice come sparare col minigun
 		GameObject go = MonoBehaviour.Instantiate(prefab_weapon, weapon_position, player.transform.rotation) as GameObject;
 		go.transform.localScale = new Vector3(((player.transform.localScale.x<0)?1:-1)*go.transform.localScale.x, go.transform.localScale.y, go.transform.localScale.z);
-		((IFire)go.GetComponent<RocketLauncherScript>()).fire(player);
+		((IFire)go.GetComponent<RocketLauncherScript>())
+		.fire(
+			player);
 	}
 }
