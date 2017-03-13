@@ -45,6 +45,7 @@ Viscera/
 Viscera.meta
 
 # Exclude vscode files
+.vscode
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
