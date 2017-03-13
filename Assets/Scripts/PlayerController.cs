@@ -2,21 +2,21 @@
 using System.Collections;
 
 public class PlayerController : MonoBehaviour, IPlayerActions {
-	Animator m_Animator;
-	public float Speed = 10.0f;
-	public float JumpSpeed = 7.0f;
-	public float WallJumpSpeed = 5.0f;
-	public LayerMask GroundLayers;
-	public GameObject[] weapon_go_list;
+	Animator m_Animator;	// Sets animation.
+	public float walk_speed = 10.0f;	// Speed for walking.
+	public float jump_factor = 7.0f;	// Jump multiplier for... jumps.
+	public float walljump_factor = 5.0f;	// Walljump "bouncing" factor.
+	public LayerMask GroundLayers;	// Specify which layers are considered as "Ground". MAYBE OBSOLETE.
+	public GameObject[] weapon_go_list;	// List of GameObject weapons.
 
-	private Rigidbody2D rigidbody_2d;
-	private Transform m_GroundCheckL,m_GroundCheckR,m_WallJumpTOP,m_WallJumpBOTTOM;
+	private Rigidbody2D rigidbody_2d;	// Cached Rigidbody2D for faster access.
+	private Transform m_GroundCheckL,m_GroundCheckR,m_WallJumpTOP,m_WallJumpBOTTOM;	// Point checkers for interactions with objects.
 
-	private Vector3 defaultpos;
+	private Vector3 defaultpos;	// Position where player respawn.
 	public bool canMoveCharacter = true;
-	private Weapon[] weapon_list;
-	private int weapon_equipped=0;
-	private float ctime_fire_weapon=-1;
+	private Weapon[] weapon_list;	// List of weapons.
+	private int weapon_equipped=0;	// Specify which weapon is equipped.
+	private float ctime_fire_weapon=-1;	// Specify when player fired last time.
 
 	// Use this for initialization
 	void Start () {
@@ -109,13 +109,13 @@ public class PlayerController : MonoBehaviour, IPlayerActions {
 			speed = (horizontalInput >= 0) ? horizontalInput : -horizontalInput;
 			//}
 			//Debug.Log("Velocity = " + this.rigidbody_2d.velocity.ToString());
-			this.rigidbody_2d.velocity = new Vector2(horizontalInput*Speed, this.rigidbody_2d.velocity.y);
+			this.rigidbody_2d.velocity = new Vector2(horizontalInput*walk_speed, this.rigidbody_2d.velocity.y);
 			//Vector2 newpos = new Vector2(horizontalInput*Speed, 0);
 			//this.rigidbody_2d.MovePosition(new Vector2(transform.position.x, transform.position.y) + newpos* Time.deltaTime);
 			//Debug.Log("VEL=" + this.rigidbody_2d.velocity);
 
 			if(jump) {
-				rigidbody_2d.AddForce(new Vector2(0, 1) * JumpSpeed, ForceMode2D.Impulse);
+				rigidbody_2d.AddForce(new Vector2(0, 1) * jump_factor, ForceMode2D.Impulse);
 				jump = false;
 			} else if(walljump) {
 				//Vector3 direction = (transform.position + new Vector3(1*(this.getFacing() ? 1 : -1), 2, 0)).normalized;
@@ -129,10 +129,7 @@ public class PlayerController : MonoBehaviour, IPlayerActions {
 			}
 			if(fired) {
 				can_fire = false;
-				Vector3 weapon_position = transform.position + (getFacing() ? Vector3.right : Vector3.left);
-				this.weapon_list[weapon_equipped].fire(gameObject, weapon_position);
-				/*IFire interface_fire = (IFire) go.GetComponent<PolloBoomerangScript>();
-				interface_fire.fire(gameObject);*/
+				this.fire();
 				fired = false;
 			}
 		}
@@ -141,6 +138,11 @@ public class PlayerController : MonoBehaviour, IPlayerActions {
 		if(this.transform.position.y < -15) {
 			this.transform.position = this.defaultpos;
 		}
+	}
+
+	public void fire(){
+		Vector3 weapon_position = transform.position + (getFacing() ? Vector3.right : Vector3.left);
+		this.weapon_list[weapon_equipped].fire(gameObject, weapon_position);
 	}
 
 	private void setFacing(bool is_right_facing){

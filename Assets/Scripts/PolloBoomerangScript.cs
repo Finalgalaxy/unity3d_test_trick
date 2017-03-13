@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
-
 public class PolloBoomerangScript : MonoBehaviour, IFire {
 	float time_coming_back=0.5f;
 	private GameObject so;
